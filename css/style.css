@@ -1,0 +1,107 @@
+@import url("fonts.css");
+:root{
+    --input-back:#F7F7FC;
+    --input-text:#ADB5BD;
+    --blue-button:#002DE3;
+    --blue-button-text:white;
+    --cyan:#E8EFFF;
+}
+body, html{
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+.row{
+    padding: 0;
+    margin: 0;
+}
+.row-form,.row-form .form,.row-form .main-img{
+    height: 100%;
+}
+.form{
+    display: flex;
+}
+.title{
+    font-family: Grafita;
+    font-size: 80px;
+    margin: 0 auto;
+    width: 200px;
+    text-align: center;
+}
+.input-text{
+    font-family: Montserrat-Bold;
+    width: 300px;
+    text-align: center;
+    font-size: 18px;
+    margin: 30px auto 40px auto;
+}
+.input-form{
+    margin:auto;
+}
+.input-input{
+    display: block;
+    border-width: 0;
+    background: var(--input-back);
+    color: var(--input-text);
+    padding: 10px;
+    text-align: center;
+    font-family: Montserrat-Medium;
+    margin: 0 auto 20px auto;
+    width: 220px;
+    outline-color: var(--input-text);
+}
+.input-input::-webkit-input-placeholder {
+    color: var(--input-text);
+}
+.input-button,.input-button-create{
+    display: flex;
+    border-radius: 25px;
+    border-width: 0;
+    padding: 10px;
+    margin: 0 auto;
+}
+.input-button *, .input-button-create *{
+    width: 100%;
+}
+.input-button{
+    width: 220px;
+    background: var(--blue-button);
+    color:var(--blue-button-text);
+    font-family: Montserrat-Bold;
+    margin-top: 40px;
+}
+.input-button-create{
+    background: var(--cyan);
+    width: 120px;
+    font-family: Montserrat-SemiBold;
+}
+.input-text-additional{
+    width: 100px;
+    margin: 15px auto;
+    text-align: center;
+    font-family: Montserrat-Medium;
+}
+.main-img{
+    display: flex;
+}
+.main-img img{
+    margin:auto auto 0 auto;
+}
+.main-img-1{
+    width: 100%;
+}
+.main-img-2{
+    width: 100%;
+}
+.input-question{
+    width: 200px;
+    text-align: center;
+    margin: 15px auto;
+    font-family: Montserrat-Light;
+    font-size: 15px;
+}
+@media (max-width: 992px){
+    .main-img{
+        display: none;
+    }
+}
