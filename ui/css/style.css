@@ -5,6 +5,7 @@
     --blue-button:#002DE3;
     --blue-button-text:white;
     --cyan:#E8EFFF;
+    --error:#F42D2D;
 }
 body, html{
     margin: 0;
@@ -40,7 +41,6 @@ body, html{
 }
 .input-input{
     display: block;
-    border-width: 0;
     background: var(--input-back);
     color: var(--input-text);
     padding: 10px;
@@ -48,7 +48,9 @@ body, html{
     font-family: Montserrat-Medium;
     margin: 0 auto 20px auto;
     width: 220px;
+    border-width: 0;
     outline-color: var(--input-text);
+    outline-width: 2px;
 }
 .input-input::-webkit-input-placeholder {
     color: var(--input-text);
@@ -104,4 +106,8 @@ body, html{
     .main-img{
         display: none;
     }
+}
+.input-question button{
+    background: transparent;
+    border-width: 0;
 }
