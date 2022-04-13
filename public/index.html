@@ -3,19 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../ui/css/bootstrap.css">
+    <link rel="stylesheet" href="../ui/css/style.css">
+    <link rel="shortcut icon" href="../ui/img/icon.ico" type="image/x-icon" />
     <title>ASQ</title>
 </head>
 <body>
     <div class="row row-form">
         <div class="col-lg-4 main-img">
-            <img src="img/human1.svg" alt="" class="main-img-1">
+            <img src="../ui/img/human1.svg" alt="" class="main-img-1">
         </div>
         <div class="col-lg-4 col-sm-12 form">
             <div class="input-form" id="login-form">
                 <h1 class="title">ASQ</h1>
-                <p class="input-text">Пожалуйста, введите свои <br> данные для входа</p>
+                <p class="input-text" id="login-input-text">Пожалуйста, введите свои <br> данные для входа</p>
+                <p class="error" id="login-error">Ошибка входа</p>
                 <input type="text" placeholder="Login" class="input-input" id="login-login">
                 <input type="password" placeholder="Password" class="input-input" id="login-password">
                 <button class="input-button" id="login"><span>Войти</span></button>
@@ -24,7 +26,8 @@
             </div>
             <div class="input-form" style="display:none" id="reg-form">
                 <h1 class="title">ASQ</h1>
-                <p class="input-text">Пожалуйста, введите свои <br> данные для регистрации</p>
+                <p class="input-text" id="reg-input-text">Пожалуйста, введите свои <br> данные для регистрации</p>
+                <p class="error" id="reg-error">Ошибка регистрации</p>
                 <input type="text" placeholder="Login" class="input-input" id="reg-login">
                 <input type="text" placeholder="Name" class="input-input" id="reg-name">
                 <input type="password" placeholder="Password" class="input-input" id="reg-password">
@@ -34,9 +37,9 @@
             </div>
         </div>
         <div class="col-lg-4 main-img" >
-            <img src="img/human2.svg" alt="" class="main-img-2">
+            <img src="../ui/img/human2.svg" alt="" class="main-img-2">
         </div>
     </div>
-    <script src="js/script.js"></script>
+    <script src="../ui/js/script.js"></script>
 </body>
 </html>

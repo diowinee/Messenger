@@ -111,3 +111,11 @@ body, html{
     background: transparent;
     border-width: 0;
 }
+.error{
+    color: var(--error);
+    width: 300px;
+    text-align: center;
+    font-family: Montserrat-Light;
+    font-size: 15px;
+    display: none;
+}
