@@ -1,35 +1,26 @@
-const jwt = require("jsonwebtoken");
-let users = [{
-    login:"login",
-    name:"name",
-    password:"password"
-}]
-module.exports.login = (req,res) => {
-    let rUser;
-    users.find((user)=>{
-        if(user["login"]===req.body.login&&user["password"]===req.body.password) return rUser=user;
-    })
-    if(!rUser) return res.sendStatus(403);
-    createToken(rUser,res)
-};
-module.exports.registration = (req,res) => {
-    if(!req.body.login || !req.body.name || !req.body.password) return res.sendStatus(400);
-    users.push({
-        login: req.body.login,
-        name: req.body.name,
-        password: req.body.password
-    });
-    createToken(users[users.length-1],res)
-}
-function createToken(user,res){
-    jwt.sign({
-        sub:user.login
-    },'key',{expiresIn: "1h"},(err,token)=>{
-        if(err) return res.sendStatus(500);
-        res.cookie('token',token);
-        res.json({
-            token,
-            redirectUrl:'main-menu'
+const User = require('../schemas/User');
+const db = require('../database');
+
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+module.exports.createUser = async ({login,name,password}) => {
+    return await User.findOne({'login':login}).then(async (data)=>{
+        if(data) throw new Error();
+        const user = new User({
+            login:login,
+            name:name,
+            password:password
         });
+        await user.save((err) => {
+            if(err) throw handleError(err);
+        });
+        return user;
+    });
+}
+module.exports.loginUser = async ({login,password}) => {
+    return await User.findOne({login:login}).then((user)=>{
+        if(!user) return;
+        if(user.password!==password) return;
+        return user;
     });
 }
