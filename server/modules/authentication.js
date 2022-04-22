@@ -1,26 +1,41 @@
 const User = require('../schemas/User');
-const db = require('../database');
 
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-
-module.exports.createUser = async ({login,name,password}) => {
-    return await User.findOne({'login':login}).then(async (data)=>{
-        if(data) throw new Error();
+module.exports.createUser = async({login,name,password}) => {
+    try{
+        const created = await isUserCreated(login);
+        if(created) return;
         const user = new User({
             login:login,
             name:name,
             password:password
         });
-        await user.save((err) => {
-            if(err) throw handleError(err);
-        });
+        await user.save();
         return user;
-    });
-}
-module.exports.loginUser = async ({login,password}) => {
-    return await User.findOne({login:login}).then((user)=>{
+    }
+    catch(e){
+        return;
+    }
+};
+
+module.exports.loginUser = async({login,password}) => {
+    try{
+        const user=await User.findOne({login:login});
         if(!user) return;
         if(user.password!==password) return;
         return user;
-    });
+    }
+    catch(e){
+        return;
+    }
+};
+
+async function isUserCreated(login){
+    try{
+        const data = await User.findOne({'login':login});
+        if(data) return true;
+        return false;
+    }
+    catch(e){
+        return false;
+    }
 }

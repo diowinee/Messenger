@@ -3,6 +3,7 @@ const bp = require("body-parser");
 const cookieParser = require('cookie-parser');
 const path = require('path');
 
+const db = require('./database');
 const verify = require('./middlewares/verify');
 const auth = require('./routes/authentication');
 const user = require('./routes/user');
