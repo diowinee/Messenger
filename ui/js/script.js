@@ -12,7 +12,7 @@ document.getElementById("login").addEventListener("click",async ()=>{
             login: `${login.value}`,
             password: `${password.value}`
         }
-        let res = await fetch("/login",{method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(log)}).then()
+        let res = await fetch("/login",{method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(log)});
         if(res.ok){
             let resObject = await res.json();
             window.location.href=window.location.href+resObject.redirectUrl;
@@ -39,7 +39,7 @@ document.getElementById("reg-create").addEventListener("click",async ()=>{
             name: `${name.value}`,
             password: `${password.value}`
         }
-        let res = await fetch("/registration",{method:"POST", headers: {'Content-Type': 'application/json'}, body:JSON.stringify(reg)})
+        let res = await fetch("/registration",{method:"POST", headers: {'Content-Type': 'application/json'}, body:JSON.stringify(reg)});
         if(res.ok){
             let resObject = await res.json();
             window.location.href=window.location.href+resObject.redirectUrl;

@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
     login:{
         type:String,
+        get: v => '@'+v,
         required:true
     },
     name:{
@@ -12,6 +13,20 @@ const UserSchema = new Schema({
     },
     password:{
         type:String,
+        required:true
+    },
+    friends:{
+        type:[{
+            type:Schema.Types.ObjectId,
+            ref:'User'
+        }]
+    },
+    photo:{
+        type:String
+    },
+    offline:{
+        type:Date,
+        default:Date.now(),
         required:true
     }
 });
