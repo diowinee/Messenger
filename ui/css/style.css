@@ -1,0 +1,524 @@
+@import url("fonts.css");
+:root{
+    --input-back:#F4F4F5;
+    --input-text:#ADB5BD;
+    --blue-button:#002DE3;
+    --blue-button-text:white;
+    --cyan:#E8EFFF;
+    --error:#F42D2D;
+    --main-color:white;
+    --chat:#CDE1FD;
+    --selected:#002DE3;
+    --twovar:#375FFF;
+    --menu:#F8FAFA;
+    --button-menu:#707579;
+}
+body, html{
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+.row{
+    padding: 0;
+    margin: 0;
+}
+.row-form,.row-form .form,.row-form .main-img{
+    height: 100%;
+}
+.form{
+    display: flex;
+}
+.title{
+    font-family: Grafita;
+    font-size: 80px;
+    margin: 0 auto;
+    width: 200px;
+    text-align: center;
+}
+.input-text{
+    font-family: Montserrat-Bold;
+    width: 300px;
+    text-align: center;
+    font-size: 18px;
+    margin: 30px auto 40px auto;
+}
+.input-form{
+    margin:auto;
+}
+.input-input{
+    display: block;
+    background: var(--input-back);
+    color: var(--input-text);
+    padding: 10px;
+    text-align: center;
+    font-family: Montserrat-Medium;
+    margin: 0 auto 20px auto;
+    width: 220px;
+    border: none;
+    outline-color: var(--input-text);
+    outline-width: 2px;
+}
+.input-input::-webkit-input-placeholder {
+    color: var(--input-text);
+    font-family: Montserrat-Medium;
+}
+.input-button,.input-button-create{
+    display: flex;
+    border-radius: 25px;
+    border: none;
+    padding: 10px;
+    margin: 0 auto;
+}
+.input-button *, .input-button-create *{
+    width: 100%;
+}
+.input-button{
+    width: 220px;
+    background: var(--blue-button);
+    color:var(--blue-button-text);
+    font-family: Montserrat-Bold;
+    margin-top: 40px;
+}
+.input-button-create{
+    background: var(--cyan);
+    width: 120px;
+    font-family: Montserrat-SemiBold;
+}
+.input-text-additional{
+    width: 100px;
+    margin: 15px auto;
+    text-align: center;
+    font-family: Montserrat-Medium;
+}
+.main-img{
+    display: flex;
+}
+.main-img img{
+    margin:auto auto 0 auto;
+}
+.main-img-1{
+    width: 100%;
+}
+.main-img-2{
+    width: 100%;
+}
+.input-question{
+    width: 200px;
+    text-align: center;
+    margin: 15px auto;
+    font-family: Montserrat-Light;
+    font-size: 15px;
+}
+@media (max-width: 992px){
+    .main-img{
+        display: none;
+    }
+}
+.input-question button{
+    background: transparent;
+    border: none;
+}
+.error{
+    color: var(--error);
+    width: 300px;
+    text-align: center;
+    font-family: Montserrat-Light;
+    font-size: 15px;
+    display: none;
+}
+.main-body{
+    flex-direction: column;
+    display: flex;
+}
+.header{
+    height: 65px;
+    background: var(--main-color);
+}
+.header-block{
+    display: flex;
+}
+.search{
+    background-image: url("../img/search.svg");
+    background-position: 10px center;
+    background-repeat: no-repeat;
+    background-size: 15px;
+    background-color: var(--input-back);
+    border-radius: 25px;
+    border: none;
+    color:var(--input-text);
+    outline-color:var(--button-menu);
+    outline-width: 1px;
+    font-family: Montserrat-Regular;
+    height: 40px;
+    width: 270px;
+    margin: auto auto auto 0;
+    padding: 15px 32px;
+    font-size: 18px;
+    outline: none;
+
+}
+.search::-webkit-input-placeholder {
+    color: var(--input-text);
+    font-family: Montserrat-Regular;    
+}
+.button-menu{
+    background: transparent;
+    margin: auto auto auto 0;
+    border: none;
+    font-size: 18px;
+    color:var(--button-menu);
+}
+.conversation-block{
+    margin: auto;
+    display: flex;
+    height: 100%;
+}
+.conversation-avatar{
+    background-color: transparent;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    border: none;
+    margin: auto 0;
+}
+.conversation-text-block{
+    display: inline-block;
+    margin: auto 0 auto 10px;
+}
+.conversation-name{
+    font-size: 20px;
+    font-family: Montserrat-Regular;
+}
+.conversation-status{
+    font-family: Montserrat-Light;
+}
+.conversation-name,.conversation-status{
+    margin: 0;
+    line-height: 1.2;
+}
+.icon-right{
+    margin: auto 0 auto auto;
+    font-size: 21px;
+}
+.main{
+    flex-grow: 1;   
+}
+.content{
+    background: var(--chat);
+    box-shadow: inset 0 0 5px 0 var(--input-text);
+    display: flex;
+}
+.sidebar{
+    padding: 0;
+    display: flex;
+}
+.notes{
+    height: 80px;;
+    background: var(--input-back);
+    padding: 10px 20px;
+}
+.notes p {
+    line-height: 1.4;
+    margin: auto 0;
+}
+.notes-heading{
+    font-size: 22px;
+    font-family: Montserrat-Regular;
+}
+.notes-message{
+    font-size: 19px;
+    font-family: Montserrat-Light;
+}
+.chat,.friend,.a-user{
+    height: 80px;
+    margin: 10px 10px 0 10px;
+    border-radius: 15px;
+    padding: 10px;
+    display:flex;
+}
+.block{
+    margin: auto;
+    display: flex;
+    height: 100%;
+}
+.avatar{
+    background-color: transparent;
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    border: none;
+    margin: auto 0;
+}
+.text-block{
+    display: inline-block;
+    margin: auto 0 auto 10px;
+}
+.ctb-div{
+    display: flex;
+}
+.name,.message,.time,.viewed{
+    line-height: 1.4;
+}
+.name{
+    display: inline-block;
+    font-size: 21px;
+    font-family: Montserrat-Regular;
+    margin: auto 0;
+}
+.message{
+    display: inline-block;
+    font-family: Montserrat-Light;
+    font-size: 18px;
+    margin: auto 0;
+}
+.time{
+    display: inline-block;
+    font-family: Montserrat-Light;
+    font-size: 16px;
+    margin: auto 0 auto 80px;
+}
+.viewed{
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin: 0 10px;
+    margin: auto 0 auto 55px;
+}
+.selected{
+    background: var(--selected)
+}
+.selected .name,.selected .message,.selected .time,.selected .notes-heading,.selected .notes-message{
+    color: white;
+}
+.header-menu{
+    list-style-type: none;
+    padding: 10px;
+    margin: 70px 0;
+    background: var(--main-color);
+    width: 270px;
+    border-radius: 20px;
+    position: fixed;
+    box-shadow: 0 0 5px 0 var(--input-text);
+    display: none;
+}
+.header-menu button li{
+    color:black;
+    font-size: 20px;
+    font-family: Montserrat-Regular;
+    display: flex;
+}
+.header-menu button li span,.header-menu li button i{
+    line-height: 1.8;
+}
+.header-menu button li i{
+    width: 20px;
+    margin: auto 22px auto 10px;
+    color:var(--button-menu);
+}
+.header-menu button li span{
+    margin: auto 0;
+}
+
+.header-border{
+    border-left: 1px solid #d6d6d8;
+}
+.user,.create-conversation{
+    margin: 40px auto auto auto;
+}
+
+.user-avatar,.user-login,.discussion-avatar{
+    display: flex;
+    width: 100%;
+}
+.user-avatar i,.discussion-avatar i{
+    margin: auto;
+    color: var(--blue-button-text);
+}
+.user-avatar i{
+    font-size: 60px;
+}
+.discussion-avatar i{
+    font-size: 80px;
+}
+.user-avatar,.discussion-avatar{
+    border-radius: 100%;
+    background-color: var(--selected);
+    background-size: cover;
+}
+.user-avatar{
+    background-image: url(../img/0.jpg);
+    margin: auto;
+    width: 160px;
+    height: 160px;
+}
+.discussion-avatar{
+    margin: 40px auto 40px auto;
+    margin-bottom: 40px;
+    width: 200px;
+    height: 200px;
+}
+.user-login{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.user-login p{
+    margin: auto;
+    display: block;
+    color:var(--input-text);
+    font-size: 20px;
+}
+.friends,.search-friends{
+    width: 100%;
+}
+
+.friends-search{
+    background: var(--selected);
+    color: var(--blue-button-text);
+    width: 100%;
+    height: 80px;;
+    padding: 10px 20px;
+    display: flex;
+    border:none;
+}
+.friends-search p {
+    line-height: 1.4;
+    margin: auto 0;
+    font-size: 22px;
+    font-family: Montserrat-Regular;
+}
+.but-cross, .but-plus{
+    background: transparent;
+    border: none;
+    margin: auto 0px auto auto;
+}
+.but-cross i{
+    font-size: 11px;
+    color:var(--button-menu);
+}
+.but-plus i{
+    font-size: 13px;
+    color:var(--button-menu);
+}
+.new-application .but-cross{
+    margin: auto 0px auto 1px;
+}
+.new-application{
+    background: var(--chat);
+}
+.header-menu button{
+    background: transparent;
+    border: none;
+    padding:0;
+    width: 100%;
+}
+.friends,.search-friends,.user,.create-conversation{
+    display: none;
+}
+.arrow{
+    display: none;
+}
+.write-message-block{
+    margin: auto auto 40px auto;
+    display: flex;
+}
+.write-message{
+    height: 65px;
+    width: 700px;
+    background: var(--blue-button-text);
+    border-radius: 15px;
+    box-shadow: 0 0 5px 0 var(--input-text);
+    margin: auto 10px;
+    border:none;
+    padding:auto;
+    padding-left: 30px;
+    padding-right: 30px;
+    outline: none;
+    font-family: Montserrat-Regular;
+}
+.write-message-attach,.write-message-send{
+    background: var(--blue-button-text);
+    height: 65px;
+    width: 65px;
+    border-radius: 100%;
+    box-shadow: 0 0 5px 0 var(--input-text);
+    border:none;
+    margin: auto 0;
+}
+.write-message-attach i,.write-message-send i{
+    color:var(--button-menu);
+    font-size: 25px;
+}
+.chat-avatar {
+    background-color: transparent;
+    width: 45px;
+    height: 45px;
+    border-radius: 100%;
+    border: none;
+    box-shadow: 0 0 5px 0 var(--input-text);
+    margin-right: 5px;
+}
+.message-field{
+    height: 100%;
+    width:700px;
+    margin: auto;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-top: 20px;
+    display: flex;
+}
+.content{
+    flex-direction: column;
+}
+.chat-name,.chat-text{
+    margin:auto 0px;
+    max-width: 300px;
+}
+.chat-name{
+    color: var(--blue-button);
+    font-family: Montserrat-SemiBold;
+}
+.chat-text{
+    font-family: Montserrat-Regular;
+}
+.chat-message{
+    display: inline-block;
+    background: white;
+    padding: 5px 10px 10px 10px;
+    border-radius: 10px;
+    width: auto;
+    height: auto;
+    box-shadow: 0 0 5px 0 var(--input-text);
+}
+.interlocutor{
+    margin-bottom: 15px;
+}
+.my-message{
+    margin: 0px 0px 15px auto;
+}
+#search-bf,#search-ff{
+    display: none;
+}
+.friends-info,.chat-info{
+    font-family: Montserrat-Light;
+    text-align: center;
+    margin-top: 50px;
+    font-size: 23px;
+}
+.chat-info{
+    margin: auto;
+    color:var(--button-menu);
+    font-size: 27px;
+}
+.friend:hover,.chat:hover{
+    background: var(--chat);
+    cursor: pointer;
+}
+.a-user:hover{
+    background: var(--chat);
+}
+.selected:hover{
+    background: var(--blue-button);
+}
+.chat-only{
+    display: none;
+}

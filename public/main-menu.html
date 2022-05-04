@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../ui/css/bootstrap.css">
+    <link rel="shortcut icon" href="../ui/img/icon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../ui/css/icons-style.css">
+    <link rel="stylesheet" href="../ui/css/style.css">
+    <title>ASQ</title>
+</head>
+<body class="main-body">
+    <div class="row header">
+        <div class="col-lg-3 header-block">
+            <button class="button-menu" id="button-menu">
+                <i class="icon-menu"></i>
+            </button>
+            <button class="button-menu arrow" id="button-arrow">
+                <i class="icon-arrow"></i>
+            </button>
+            <button class="button-menu arrow" id="button-arrow-friends">
+                <i class="icon-arrow"></i>
+            </button>
+            <ul class="header-menu" id="header-menu">
+                <button id="hm-friends"><li><i class="icon-friends"></i><span>Друзья</span></li></button>
+                <button id="hm-create-conversation"><li><i class="icon-conversation"></i><span>Создать беседу</span></li></button>
+                <button id="hm-account"><li><i class="icon-user"></i><span>Личный кабинет</span></li></button>
+                <button id="hm-logout"><li><i class="icon-logout"></i><span>Выйти</span></li></button>
+            </ul>
+            <input type="text" class="search" placeholder="Поиск" id="search">
+            <input type="text" class="search" placeholder="Поиск по друзьям" id="search-bf">
+            <input type="text" class="search" placeholder="Поиск друзей" id="search-ff">
+        </div>
+        <div class="col-lg-3 header-border">
+            <div></div>
+        </div>
+        <div class="col-lg-3 header-block chat-only" id="chat-only-1">
+            <div class="conversation-block">
+                <img src="../ui/img/0.jpg" alt="" class="conversation-avatar">
+                <div class="conversation-text-block">
+                    <p class="conversation-name" id="conversation-name">Имя Фамилия</p>    
+                    <p class="conversation-status">был(а) 1 час назад</p> 
+                </div>
+            </div>
+        </div>  
+        <div class="col-lg-3 header-block chat-only" id="chat-only-2">
+            <button class="button-menu icon-right">
+                <i class="icon-dots"></i>
+            </button>
+        </div>          
+    </div>
+    <div class="row main">
+        <div class="col-lg-3 sidebar">
+            <!--Чаты-->
+            <div class="chats" id="chats">
+                <div class="notes">
+                    <p class="notes-heading">Заметки</p>
+                    <p class="notes-message">Скинуть Илье отчет по практи...</p>
+                </div>
+                <div class="chat">
+                    <img src="../ui/img/0.jpg" alt="" class="avatar">
+                    <div class="text-block">
+                        <div class="ctb-div">
+                            <p class="name">Имя Фамилия</p>
+                            <p class="time">17:03</p>
+                        </div>  
+                        <div class="ctb-div">
+                            <p class="message">Привет, скинь отчет...</p> 
+                            <img src="../ui/img/ellipse.svg" alt="" class="viewed">
+                        </div>
+                    </div>
+                </div>
+                <div class="chat selected">
+                    <img src="../ui/img/0.jpg" alt="" class="avatar">
+                    <div class="text-block">
+                        <div class="ctb-div">
+                            <p class="name">Имя Фамилия</p>
+                            <p class="time">17:03</p>
+                        </div>  
+                        <div class="ctb-div">
+                            <p class="message">Привет, скинь отчет...</p> 
+                            <img src="../ui/img/ellipse.svg" alt="" class="viewed">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Друзья-->
+            <div class="friends" id="friends">
+                <button class="friends-search" id="friends-search">
+                    <p>Поиск друзей</p>
+                </button>
+                <div class="location-of-friends" id="location-of-friends">
+                    <!-- <div class="friend new-application">
+                        <img src="../ui/img/0.jpg" alt="" class="avatar">
+                        <div class="text-block">
+                            <div>
+                                <p class="name">Имя Фамилия</p><br>
+                                <p class="message">@user</p> 
+                            </div>  
+                        </div>
+                        <button class="but-plus">
+                            <i class="icon-plus"></i> 
+                        </button>
+                        <button class="but-cross">
+                            <i class="icon-cross"></i> 
+                        </button>
+                    </div>
+                    <div class="friend">
+                        <img src="../ui/img/0.jpg" alt="" class="avatar">
+                        <div class="text-block">
+                            <div>
+                                <p class="name">Имя Фамилия</p><br>
+                                <p class="message">@user</p> 
+                            </div>  
+                        </div>
+                        <button class="but-cross">
+                            <i class="icon-cross"></i> 
+                        </button>
+                    </div> -->
+                </div>
+            </div>
+            <!--Поиск друзей-->
+            <div class="search-friends" id="search-friends">
+                <!-- <div class="a-user">
+                    <img src="../ui/img/0.jpg" alt="" class="avatar">
+                    <div class="text-block">
+                        <div>
+                            <p class="name">Имя Фамилия</p><br>
+                            <p class="message">@user</p> 
+                        </div>  
+                    </div>
+                    <button class="but-cross">
+                        <i class="icon-plus"></i> 
+                    </button>
+                </div> -->
+            </div>
+            <!--Личный кабинет-->
+            <div class="user" id="user">
+                <div class="user-avatar">
+                    <i class="icon-add-photo"></i>
+                </div>
+                <div class="user-login">
+                    <p>@user</p>
+                </div>
+                <input type="text" placeholder="New name" class="input-input">
+                <input type="password" placeholder="Old password" class="input-input">
+                <input type="password" placeholder="New password" class="input-input">
+                <button class="input-button" id="login"><span>Сохранить</span></button>
+            </div>
+            <!--Создать беседу-->
+            <div class="create-conversation" id="create-conversation">
+                <div class="discussion-avatar">
+                    <i class="icon-add-photo"></i>
+                </div>
+                <input type="text" placeholder="Название беседы" class="input-input">
+                <button class="input-button" id="login"><span>Создать</span></button>
+            </div>
+        </div>
+        <div class="col-lg-9 content">
+            <div class="message-field" id="message-field">
+                <!-- <div class="interlocutor">
+                    <img src="../ui/img/0.jpg" class="chat-avatar" alt="">
+                    <div class="chat-message">
+                        <p class="chat-name">Имя Фамилия</p>
+                        <p class="chat-text">Привет, скинь отчет по практие sdfsdfsd sdfsdf sdfsdf sdfsdf sdfsdf</p>
+                    </div>
+                </div>
+                <div class="my-message">
+                    <div class="chat-message">
+                        <p class="chat-text">Привет, скинь отчет по практие sdfsdfsd sdfsdf sdfsdf sdfsdf sdfsdf</p>
+                    </div>
+                </div> -->
+            </div>
+            <div class="write-message-block">
+                <button class="write-message-attach">
+                    <i class="icon-paper-clip"></i>
+                </button>
+                <input type="text" class="write-message" id="write-message">
+                <button class="write-message-send" id="write-message-send">
+                    <i class="icon-send"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="../ui/js/main-menu.js"></script>
+</body>
+</html>
