@@ -1,1 +1,0 @@
-const STATUS = ['LOADING','SEND','UNREAD']
