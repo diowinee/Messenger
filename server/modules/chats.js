@@ -1,61 +1,42 @@
-const text = require('body-parser/lib/types/text');
+const { populate } = require('../schemas/Chat');
 const Chat = require('../schemas/Chat');
-const Message = require('../schemas/Message');
-const TextMessage = require('../schemas/TextMessage');
-
-module.exports.openDialog = async(userId,friendId)=>{
+module.exports.createChat = async(title,creater)=>{
     try{
-        const dialog = await Chat.findOne({$and:[
-            {'isPrivate':false},
-            {'users':{$all:[userId,friendId]}}
-        ]},'_id messages').populate({path: 'messages', populate: {path: 'modelId user'}});
-        if(!dialog){
-           const chat = new Chat({
-                creater:userId,
-                users:[userId,friendId]
-           });
-           const newChat = await chat.save();
-           if(!newChat) return;
-           return chat;
-        }
-        return dialog;
+        const chat = new Chat({
+            'isPrivate':true,
+            'title':title,
+            'creater':creater,
+            users:[creater]
+        });
+        const newChat = chat.save();
+        if(!newChat) return;
+        return newChat;
     }
     catch(e){
         return;
     }
 }
-
-module.exports.sendMessage = async(chatId,type,message,userId)=>{
+module.exports.getChats = async (userId)=>{
     try{
-        if(type==='TextMessage'){
-            const textMes = new TextMessage({
-                text:message
-            });
-            const textMessageResult = await  textMes.save();
-            if(!textMessageResult._id) return;
-            const mes = new Message({
-                status:'UNREAD',
-                user:userId,
-                models:type,
-                modelId:textMessageResult._id
-            });
-            const messageResult = await mes.save();
-            if(!messageResult._id) return;
-            const result = await Chat.updateOne({'_id':chatId},{$push:{messages:messageResult._id}});
-            if(!result) return;
-            return result;
-        }
+        const chats = await Chat.find({$and:[
+            {users:userId},
+            {$or:[
+                {isPrivate:true},
+                {messages:{$ne:[]}}
+            ]}
+        ]}).populate({path: 'messages', populate: {path: 'modelId user'}}).populate({path:'users'})
+        if(!chats) return;
+        return chats;
     }
     catch(e){
-        return
+        return;
     }
 }
-
-module.exports.getMessage = async(chatId)=>{
+module.exports.openChat = async(chatId)=>{
     try{
-        const dialog = await Chat.findOne({'_id':chatId},'messages').populate({path: 'messages', populate: {path: 'modelId user'}});
-        if(!dialog) return;
-        return dialog;
+        const chat = await Chat.findOne({_id:chatId},'_id messages isPrivate').populate({path: 'messages', populate: {path: 'modelId user'}});
+        if(!chat) return;
+        return chat;
     }
     catch(e){
         return;

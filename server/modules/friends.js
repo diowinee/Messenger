@@ -10,9 +10,11 @@ module.exports.outputFriends = async (id)=>{
         return;
     }
 }
+
 module.exports.searchFriends = async (searchText,id)=>{
     try{
         const user = await User.findOne({'_id':id}).populate('friends','_id');
+        //?
         const friends = await User.find({$and:[
             {$or:[
                 {'name':{$regex:`^${searchText}`,$options:'i'}},
@@ -39,6 +41,7 @@ module.exports.addNewFriend = async (friendId,id)=>{
         return;
     }
 }
+
 module.exports.deleteFriend = async (friendId,id)=>{
     try{
         const result = await User.updateOne({'_id':id},{$pull:{friends:friendId}});

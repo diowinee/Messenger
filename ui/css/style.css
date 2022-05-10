@@ -203,17 +203,21 @@ body, html{
 .main{
     flex-grow: 1;   
 }
+.chats{
+    width: 100%;
+}
 .content{
     background: var(--chat);
     box-shadow: inset 0 0 5px 0 var(--input-text);
     display: flex;
+    padding: 0;
 }
 .sidebar{
     padding: 0;
     display: flex;
 }
 .notes{
-    height: 80px;;
+    height: 80px;
     background: var(--input-back);
     padding: 10px 20px;
 }
@@ -231,7 +235,7 @@ body, html{
 }
 .chat,.friend,.a-user{
     height: 80px;
-    margin: 10px 10px 0 10px;
+    margin: 10px 0px 0px 10px;
     border-radius: 15px;
     padding: 10px;
     display:flex;
@@ -247,11 +251,12 @@ body, html{
     height: 60px;
     border-radius: 100%;
     border: none;
-    margin: auto 0;
+    margin: auto 0px auto 0px;
 }
 .text-block{
+    width: 100%;
     display: inline-block;
-    margin: auto 0 auto 10px;
+    margin: auto 0px auto 10px;
 }
 .ctb-div{
     display: flex;
@@ -275,14 +280,13 @@ body, html{
     display: inline-block;
     font-family: Montserrat-Light;
     font-size: 16px;
-    margin: auto 0 auto 80px;
+    margin: auto 0 auto auto;
 }
 .viewed{
     display: inline-block;
     width: 10px;
     height: 10px;
-    margin: 0 10px;
-    margin: auto 0 auto 55px;
+    margin: auto 0px auto auto;
 }
 .selected{
     background: var(--selected)
@@ -322,11 +326,11 @@ body, html{
 .header-border{
     border-left: 1px solid #d6d6d8;
 }
-.user,.create-conversation{
+.user,.create-conversation,.conversation-settings{
     margin: 40px auto auto auto;
 }
 
-.user-avatar,.user-login,.discussion-avatar{
+.user-avatar,.user-login,.discussion-avatar,.conversation-settings-p{
     display: flex;
     width: 100%;
 }
@@ -361,16 +365,46 @@ body, html{
     margin-top: 20px;
     margin-bottom: 20px;
 }
+.conversation-settings-p{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 .user-login p{
     margin: auto;
     display: block;
     color:var(--input-text);
     font-size: 20px;
 }
+.conversation-settings-p p{
+    margin: auto;
+    display: block;
+    color:var(--input-text);
+    font-size: 25px;
+    text-align: center;
+}
+.container-search-friends{
+    width: 100%;
+    height: 683px;
+    overflow-y: scroll;
+    display: flex;
+    padding-bottom: 10px;
+}
+.container-friends{
+    width: 100%;
+    height: 603px;
+    overflow-y: scroll;
+    display: flex;
+    padding-bottom: 10px;
+}
+.container-chats{
+    width: 100%;
+    height: 603px;
+    overflow-y: scroll;
+    padding-bottom: 10px;
+}
 .friends,.search-friends{
     width: 100%;
 }
-
 .friends-search{
     background: var(--selected);
     color: var(--blue-button-text);
@@ -411,14 +445,14 @@ body, html{
     padding:0;
     width: 100%;
 }
-.friends,.search-friends,.user,.create-conversation{
+.friends,.container-search-friends,.user,.create-conversation,.conversation-settings{
     display: none;
 }
 .arrow{
     display: none;
 }
 .write-message-block{
-    margin: auto auto 40px auto;
+    margin: auto auto 30px auto;
     display: flex;
 }
 .write-message{
@@ -456,14 +490,22 @@ body, html{
     border: none;
     box-shadow: 0 0 5px 0 var(--input-text);
     margin-right: 5px;
+    margin-bottom: 12px;
 }
 .message-field{
-    height: 100%;
-    width:700px;
+    width:710px;
     margin: auto;
     flex-direction: column;
     justify-content: flex-end;
     padding-top: 20px;
+    min-height: min-content;
+    display: flex;
+    padding-left: 12px;
+    margin: auto auto 0 auto;
+}
+.message-container{
+    height: 570px;
+    overflow-y: scroll;
     display: flex;
 }
 .content{
@@ -483,19 +525,21 @@ body, html{
 .chat-message{
     display: inline-block;
     background: white;
-    padding: 5px 10px 10px 10px;
+    padding: 5px 10px;
     border-radius: 10px;
     width: auto;
     height: auto;
     box-shadow: 0 0 5px 0 var(--input-text);
 }
 .interlocutor{
-    margin-bottom: 15px;
+    margin-bottom: 0px;
+    display: inline-block;
 }
 .my-message{
-    margin: 0px 0px 15px auto;
+    margin: 0px 0px 10px auto;
+    display: inline-block;
 }
-#search-bf,#search-ff{
+#search-bf,#search-ff,#search-bp,#search-fd{
     display: none;
 }
 .friends-info,.chat-info{
@@ -503,14 +547,14 @@ body, html{
     text-align: center;
     margin-top: 50px;
     font-size: 23px;
+    color:var(--button-menu);
 }
 .chat-info{
     margin: auto;
-    color:var(--button-menu);
     font-size: 27px;
 }
 .friend:hover,.chat:hover{
-    background: var(--chat);
+    background: var(--input-back);
     cursor: pointer;
 }
 .a-user:hover{
@@ -521,4 +565,69 @@ body, html{
 }
 .chat-only{
     display: none;
+}
+.message-container::-webkit-scrollbar {
+    width: 12px;
+}
+.message-container::-webkit-scrollbar-thumb {
+    background: var(--input-text);
+    border-radius: 8px;
+    border: 3px solid var(--chat);
+}
+.message-container::-webkit-scrollbar-thumb:hover {
+    background: var(--button-menu);
+}
+
+.container-search-friends::-webkit-scrollbar,.container-friends::-webkit-scrollbar,.container-chats::-webkit-scrollbar {
+    width: 10px;
+}
+.container-search-friends::-webkit-scrollbar-thumb,.container-friends::-webkit-scrollbar-thumb,.container-chats::-webkit-scrollbar-thumb {
+    background: var(--input-text);
+    border-radius: 8px;
+    border: 3px solid var(--blue-button-text);
+}
+.container-search-friends::-webkit-scrollbar-thumb:hover,.container-friends::-webkit-scrollbar-thumb:hover,.container-chats::-webkit-scrollbar-thumb:hover{
+    background: var(--button-menu);
+}
+.location-of-friends{
+    width: 100%;
+}
+.ellipsis{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    width: 210px;
+}
+.chat-menu{
+    display: block;
+    width:195px;
+    margin: 70px 0px auto auto;
+}
+.chat-menu-block{
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+    margin-right: 10px;
+}
+.chat-menu-main-block{
+    padding: 0;
+}
+.chat-menu{
+    display: none;
+}
+.participants-conversation,.add-users-sidebar{
+    width: 100%;
+}
+.participants-conversation,.participants-conversation,.add-users-sidebar{
+    display:none;
+}
+.header-menu button li{
+    color:black;
+    font-size: 20px;
+    font-family: Montserrat-Regular;
+    display: flex;
+}
+.cf-size{
+    height: 683px;
 }

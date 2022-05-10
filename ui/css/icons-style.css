@@ -1,16 +1,16 @@
 @font-face {
   font-family: 'icons';
-  src:  url('../fonts/icons.eot?evnv8o');
-  src:  url('../fonts/icons.eot?evnv8o#iefix') format('embedded-opentype'),
-    url('../fonts/icons.ttf?evnv8o') format('truetype'),
-    url('../fonts/icons.woff?evnv8o') format('woff'),
-    url('../fonts/icons.svg?evnv8o#icons') format('svg');
+  src:  url('../fonts/icons.eot?74lmw1');
+  src:  url('../fonts/icons.eot?74lmw1#iefix') format('embedded-opentype'),
+    url('../fonts/icons.ttf?74lmw1') format('truetype'),
+    url('../fonts/icons.woff?74lmw1') format('woff'),
+    url('../fonts/icons.svg?74lmw1#icons') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
 }
 
-[class^="icon-"]::before, [class*=" icon-"]::before {
+[class^="icon-"], [class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'icons' !important;
   speak: never;
@@ -25,6 +25,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-participants:before {
+  content: "\e913";
+}
+.icon-settings:before {
+  content: "\e914";
+}
 .icon-arrow:before {
   content: "\e912";
 }

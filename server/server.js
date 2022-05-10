@@ -8,6 +8,7 @@ const verify = require('./middlewares/verify');
 const auth = require('./routes/authentication');
 const user = require('./routes/user');
 const friends = require('./routes/friends');
+const chat = require('./routes/chat');
 const chats = require('./routes/chats');
 const { version } = require('os');
 
@@ -22,8 +23,11 @@ app.use('/ui',express.static(path.join(__dirname,'../ui')));
 app.post('/login', auth.login);
 app.post('/registration', auth.registration);
 app.post('/modification',verify.verify,user.modification);
-app.post('/friends',verify.verify,friends.addNewFriend)
-app.post('/chat/:chatId/message',verify.verify,chats.sendMessage);
+app.post('/friends',verify.verify,friends.addNewFriend);
+app.post('/chats',verify.verify,chats.createChat);
+app.post('/chat/:chatId/message',verify.verify,chat.sendMessage);
+app.post('/chat/:chatId/participants',verify.verify,chat.addParticipant);
+app.post('/chat/:chatId',verify.verify,chat.editChat);
 
 app.get('/',(req,res)=>{
     res.sendFile(path.join(__dirname,"../public/index.html"),(err)=>{
@@ -35,15 +39,27 @@ app.get('/main-menu',verify.verify,(req,res)=>{
         if(err) res.sendStatus(500);
     })
 });
-app.get('/info',verify.verify,user.info);
-app.get('/friends',verify.verify,friends.outputFriends);
-app.get('/search-friends',verify.verify,friends.searchFriends)
-app.get('/search-users',verify.verify,user.searchUsers)
 
-app.get('/dialog/:friendId',verify.verify,chats.openDialog);
-app.get('/chat/:chatId/message',verify.verify,chats.getMessage);
+app.get('/user/info',verify.verify,user.info);
+app.get('/friends',verify.verify,friends.outputFriends);
+
+app.get('/search-friends',verify.verify,friends.searchFriends);
+app.get('/search-users',verify.verify,user.searchUsers);
+app.get('/search-participants',verify.verify,chat.searchParticipants);
+
+app.get('/chats',verify.verify,chats.getChats);
+app.get('/chats/:chatId',verify.verify,chats.openChat);
+
+app.get('/chat/:chatId/search-friends',verify.verify,chat.searchFriends);
+app.get('/chat/:chatId/message',verify.verify,chat.getMessage);
+app.get('/chat/:chatId/friends',verify.verify,chat.outputFriends);
+app.get('/chat/:chatId/participants',verify.verify,chat.getParticipants);
+app.get('/chat/friends/:friendId',verify.verify,chat.openDialog);
+app.get('/chat/:chatId',verify.verify,chat.getInfo);
 
 app.delete('/friends/:friendId',verify.verify,friends.deleteFriend);
+app.delete('/chat/:chatId/participant',verify.verify,chat.deleteParticipant);
+app.delete('/chat/:chatId',verify.verify,chat.logout)
 
 app.listen(port,(err)=>{
     if(err) return console.log(err);
