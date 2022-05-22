@@ -17,7 +17,7 @@
             <div class="input-form" id="login-form">
                 <h1 class="title">ASQ</h1>
                 <p class="input-text" id="login-input-text">Пожалуйста, введите свои <br> данные для входа</p>
-                <p class="error" id="login-error">Ошибка входа</p>
+                <p class="error" id="login-error">Неверный логин или пароль</p>
                 <input type="text" placeholder="Login" class="input-input" id="login-login">
                 <input type="password" placeholder="Password" class="input-input" id="login-password">
                 <button class="input-button" id="login"><span>Войти</span></button>
@@ -26,8 +26,11 @@
             </div>
             <div class="input-form" style="display:none" id="reg-form">
                 <h1 class="title">ASQ</h1>
+
                 <p class="input-text" id="reg-input-text">Пожалуйста, введите свои <br> данные для регистрации</p>
-                <p class="error" id="reg-error">Ошибка регистрации</p>
+                <p class="error" id="reg-error">Пользователь с таким логиным существует</p>
+                <p class="error" id="pas-error">Пароль должен состоять минимум из 8 символов</p>
+
                 <input type="text" placeholder="Login" class="input-input" id="reg-login">
                 <input type="text" placeholder="Name" class="input-input" id="reg-name">
                 <input type="password" placeholder="Password" class="input-input" id="reg-password">

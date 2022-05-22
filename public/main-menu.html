@@ -36,28 +36,36 @@
             <input type="text" class="search" placeholder="Поиск по участникам" id="search-bp">
             <input type="text" class="search" placeholder="Поиск по друзьям" id="search-fd">
         </div>
-        <div class="col-lg-3 header-border">
+        <div class="col-lg-3 header-border header-shadow">
             <div></div>
         </div>
-        <div class="col-lg-3 header-block chat-only" id="chat-only-1">
-            <div class="conversation-block">
-                <img src="../ui/img/0.jpg" alt="" class="conversation-avatar">
-                <div class="conversation-text-block">
-                    <p class="conversation-name" id="conversation-name">Имя Фамилия</p>    
-                    <p class="conversation-status">был(а) 1 час назад</p> 
+        <div class="col-lg-3 header-block header-shadow">
+            <div id="chat-only-1" class="chat-only header-size">
+                <div class="conversation-block" id="conversation-block-1">
+                    <img src="../ui/img/0.jpg" alt="" class="conversation-avatar" id="conversation-avatar">
+                    <div class="conversation-avatar-text" id="conversation-avatar-text"><span id="conversation-avatar-text-span">A</span></div> 
+                    <div class="conversation-text-block">
+                        <p class="conversation-name conversation-name-width" id="conversation-name">Имя Фамилия</p> 
+                        <p class="conversation-status">был(а) 1 час назад</p> 
+                    </div>
+                </div>
+                <div class="conversation-block" id="conversation-block-2">
+                    <p class="conversation-block-notes">Заметки</p> 
                 </div>
             </div>
         </div>  
-        <div class="col-lg-3 header-block chat-only chat-menu-main-block" id="chat-only-2">
-           <div class="chat-menu-block">
-                <button class="button-menu icon-right" id="button-menu-right">
-                    <i class="icon-dots"></i>
-                </button>
-                <ul class="header-menu chat-menu" id="chat-menu">
-                    <button id="cm-participants"><li><i class="icon-participants"></i><span>Участники</span></li></button>
-                    <button id="cm-settings"><li><i class="icon-settings"></i><span>Настройки</span></li></button>
-                    <button id="cm-logout"><li><i class="icon-logout"></i><span>Выйти</span></li></button>
-                </ul>
+        <div class="col-lg-3 header-block header-shadow">
+           <div id="chat-only-2" class="chat-only chat-menu-main-block header-size">
+                <div class="chat-menu-block">
+                    <button class="button-menu icon-right" id="button-menu-right">
+                        <i class="icon-dots"></i>
+                    </button>
+                    <ul class="header-menu chat-menu" id="chat-menu">
+                        <button id="cm-participants"><li><i class="icon-friends"></i><span>Участники</span></li></button>
+                        <button id="cm-settings"><li><i class="icon-settings"></i><span>Настройки</span></li></button>
+                        <button id="cm-logout"><li><i class="icon-logout"></i><span>Выйти</span></li></button>
+                    </ul>
+            </div>
            </div>
         </div>          
     </div>
@@ -65,12 +73,12 @@
         <div class="col-lg-3 sidebar">
             <!--Чаты-->
             <div class="chats" id="chats">
-                <div class="notes">
+                <div class="notes" id="notes">
                     <p class="notes-heading">Заметки</p>
-                    <p class="notes-message">Скинуть Илье отчет по практи...</p>
+                    <p class="notes-message notes-width" id="notes-message">Сообщений пока нету</p>
                 </div>
                 <div class="container-chats" id="container-chats">
-                    <div class="chat">
+                    <!-- <div class="chat">
                         <img src="../ui/img/0.jpg" alt="" class="avatar">
                         <div class="text-block">
                             <div class="ctb-div">
@@ -82,7 +90,7 @@
                                 <img src="../ui/img/ellipse.svg" alt="" class="viewed">
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- <div class="chat">
                         <img src="../ui/img/0.jpg" alt="" class="avatar">
                         <div class="text-block">
@@ -167,7 +175,8 @@
             </div>
             <!--Личный кабинет-->
             <div class="user" id="user">
-                <div class="user-avatar">
+                <input type="file" class="user-file-photo" id="user-file-photo">
+                <div class="user-avatar" id="user-avatar">
                     <i class="icon-add-photo"></i>
                 </div>
                 <div class="user-login">
@@ -180,9 +189,10 @@
             </div>
             <!--Создать беседу-->
             <div class="create-conversation" id="create-conversation">
-                <div class="discussion-avatar">
+                <div class="discussion-avatar" id="discussion-avatar">
                     <i class="icon-add-photo"></i>
                 </div>
+                <input type="file" class="user-file-photo" id="conversation-input-file">
                 <input type="text" placeholder="Название беседы" class="input-input" id="conversation-input">
                 <button class="input-button" id="conversation-send"><span>Создать</span></button>
             </div>
@@ -229,9 +239,10 @@
             </div>
             <!--Настройки беседы-->
             <div class="conversation-settings" id="conversation-settings">
-                <div class="discussion-avatar">
+                <div class="discussion-avatar" id="discussion-avatar-input">
                     <i class="icon-add-photo"></i>
                 </div>
+                <input type="file" class="user-file-photo" id="user-file-photo-settings">
                 <input type="text" placeholder="Новое название" class="input-input" id="conversation-settings-input">
                 <div class="conversation-settings-p">
                     <p class="conversation-settings-p" id="conversation-settings-p"></p>
@@ -253,13 +264,38 @@
                         <div class="chat-message">
                             <p class="chat-text">Привет, скинь отчет по практие sdfsdfsd sdfsdf sdfsdf sdfsdf sdfsdf</p>
                         </div>
+                    </div>
+                    <div class="my-message chat-file-pad">
+                        <div class="chat-message">
+                            <div class="chat-file">
+                                <div class="chat-icon-file"><i class="icon-file"></i></div>
+                                <div class="chat-text-block">
+                                    <p class="chat-text chat-text-file-name">Файл.txt</p>
+                                    <p class="chat-text chat-text-file-size">20.07 KB</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="interlocutor chat-file-pad">
+                        <img src="../ui/img/0.jpg" class="chat-avatar" alt="">
+                        <div class="chat-message">
+                            <p class="chat-name">Имя Фамилия</p>
+                            <div class="chat-file">
+                                <div class="chat-icon-file"><i class="icon-file"></i></div>
+                                <div class="chat-text-block">
+                                    <p class="chat-text chat-text-file-name">Файл.txt</p>
+                                    <p class="chat-text chat-text-file-size">20.07 KB</p>
+                                </div>
+                            </div>
+                        </div>
                     </div> -->
                 </div>
             </div>
             <div class="write-message-block chat-only" id="chat-only-3">
-                <button class="write-message-attach">
+                <button class="write-message-attach" id="write-message-attach">
                     <i class="icon-paper-clip"></i>
                 </button>
+                <input type="file" class="file" id="upload-file" hidden="hidden">
                 <input type="text" class="write-message" id="write-message">
                 <button class="write-message-send" id="write-message-send">
                     <i class="icon-send"></i>

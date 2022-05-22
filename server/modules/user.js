@@ -1,4 +1,5 @@
 const User = require('../schemas/User');
+const path = require('path');
 
 module.exports.infoUser = async (id) => {
     try{
@@ -30,6 +31,18 @@ module.exports.editUser = async (id,name,newPas,oldPas) => {
         return;
     }
 };
+module.exports.editAvatar = async (id,file) => {
+    try{
+        const result = file.mv('./uploads/users/'+id+path.extname(file.name))
+        if(!result) return;
+        const avatar = await User.findOneAndUpdate({_id:id},{photo:String(id+path.extname(file.name))});
+        if(!avatar) return;
+        return avatar;
+    }
+    catch(e){
+        return;
+    }
+};
 
 module.exports.searchUsers = async (searchText,id)=>{
     try{
@@ -41,7 +54,9 @@ module.exports.searchUsers = async (searchText,id)=>{
                 {'login':{$regex:`^${searchText}`,$options:'i'}}
             ]},
             {'_id':{$ne:id}},
-            {'_id':{$nin:user.friends}}
+            {'_id':{$nin:user.friends}},
+            {'_id':{$nin:user.requests}},
+            {'requests':{$nin:[id]}}
         ]})
         if(!users) return;
         return users;

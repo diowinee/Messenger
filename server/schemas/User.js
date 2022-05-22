@@ -21,6 +21,12 @@ const UserSchema = new Schema({
             ref:'User'
         }]
     },
+    requests:{
+        type:[{
+            type:Schema.Types.ObjectId,
+            ref:'User'
+        }]
+    },
     photo:{
         type:String
     },

@@ -4,7 +4,7 @@ module.exports.createChat = async (req,res)=>{
     try{
         const newChat = await chatsService.createChat(req.body.title,req.userId)
         if(!newChat) res.sendStatus(400);
-        res.send();
+        res.json(newChat);
     }
     catch(e){
         res.sendStatus(400);

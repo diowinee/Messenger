@@ -1,12 +1,16 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const FileMessageSchema = new Schema({
-    path:{
+    extension:{
         type:String,
         required:true
     },
-    extension:{
+    name:{
         type:String,
+        required:true
+    },
+    size:{
+        type:Schema.Types.Number,
         required:true
     }
 });

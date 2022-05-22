@@ -7,10 +7,10 @@ document.getElementById("login").addEventListener("click",async ()=>{
     let err = document.getElementById("login-error");
     let text = document.getElementById("login-input-text");
 
-    if(login.value!==""&&password.value!==""){
+    if(login.value.trim()!==""&&password.value.trim()!==""){
         let log = {
-            login: `${login.value}`,
-            password: `${password.value}`
+            login: `${login.value.trim()}`,
+            password: `${password.value.trim()}`
         }
         let res = await fetch("/login",{method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(log)});
         if(res.ok){
@@ -20,8 +20,8 @@ document.getElementById("login").addEventListener("click",async ()=>{
         else error(err,text);
     }
     else {
-        if(login.value==="") border(login);
-        if(password.value==="") border(password);
+        if(login.value.trim()==="") border(login);
+        if(password.value.trim()==="") border(password);
     }
 });
 
@@ -32,25 +32,30 @@ document.getElementById("reg-create").addEventListener("click",async ()=>{
     let repeatPassword = document.getElementById("reg-repeat-password");
     let err = document.getElementById("reg-error");
     let text = document.getElementById("reg-input-text");
-
-    if(login.value!==""&&name.value!==""&&password.value!==""&&password.value===repeatPassword.value){
-        let reg = {
-            login: `${login.value}`,
-            name: `${name.value}`,
-            password: `${password.value}`
+    let paserr = document.getElementById("pas-error");
+    if(login.value.trim()!==""&&name.value.trim()!==""&&password.value.trim()!==""&&password.value.trim()===repeatPassword.value.trim()){
+        if(password.value.trim().length>=8){
+            let reg = {
+                login: `${login.value.trim()}`,
+                name: `${name.value.trim()}`,
+                password: `${password.value.trim()}`
+            }
+            let res = await fetch("/registration",{method:"POST", headers: {'Content-Type': 'application/json'}, body:JSON.stringify(reg)});
+            if(res.ok){
+                let resObject = await res.json();
+                window.location.href=window.location.href+resObject.redirectUrl;
+            }
+            else error(err,text);
         }
-        let res = await fetch("/registration",{method:"POST", headers: {'Content-Type': 'application/json'}, body:JSON.stringify(reg)});
-        if(res.ok){
-            let resObject = await res.json();
-            window.location.href=window.location.href+resObject.redirectUrl;
+        else{
+            error(paserr,text);
         }
-        else error(err,text);
     }
     else {
-        if(login.value==="") border(login);
-        if(name.value==="") border(name);
-        if(password.value==="") border(password);
-        if(password.value===""||password.value!==repeatPassword.value) border(repeatPassword);
+        if(login.value.trim()==="") border(login);
+        if(name.value.trim()==="") border(name);
+        if(password.value.trim()==="") border(password);
+        if(password.value.trim()===""||password.value.trim()!==repeatPassword.value.trim()) border(repeatPassword);
     }
 });
 
