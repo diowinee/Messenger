@@ -26,6 +26,48 @@ const addUsersSidebar = document.getElementById('add-users-sidebar');
 const participantsConversation = document.getElementById('participants-conversation');
 const conversationSettings = document.getElementById('conversation-settings');
 
+const socket = io('ws://localhost:8000',{transports:['websocket']});
+let onlineList = [];
+
+socket.once('connect', async ()=>{
+    socket.emit('login',{
+        token:sessionStorage.getItem('token')
+    });
+    const res= await fetch('/chats',{method:'GET'});
+    if(res.ok){
+        const chatsResult = await res.json();
+        socket.emit('join chats',{
+            chats:chatsResult.chats
+        });
+        socket.emit('dialogues online');
+    }
+})
+
+socket.on('accept message',async (data)=>{
+    getChats();
+    if(data.chatId===selectedChat){
+        const res2 = await fetch(`/chat/${selectedChat}/message`,{method:'GET'});    
+        if(res2.ok){
+            const result = await res2.json();
+            displayChat(result);
+        }
+    }
+});
+
+socket.on('online',(data)=>{
+    console.log(data.dialog);
+    onlineList.push(data.dialog);
+    getChats();
+});
+
+socket.on('offline',(data)=>{
+    const index = onlineList.indexOf(data.dialog);
+    if (index !== -1) {
+        onlineList.splice(index, 1);
+    }
+    getChats();
+});
+
 const filePhoto = document.getElementById('user-file-photo');
 filePhoto.addEventListener('change',()=>{
     const url = URL.createObjectURL(filePhoto.files[0]);
@@ -62,12 +104,9 @@ file.addEventListener('change',async ()=>{
     fileMessage.append("file", file.files[0])
     const res = await fetch(`/chat/${selectedChat}/file-message`,{method:'POST',body:fileMessage});
     if(res.ok){
-        const res2 = await fetch(`/chat/${selectedChat}/message`,{method:'GET'});
-        if(res2.ok){
-            const result = await res2.json();
-            displayChat(result);
-            getChats();
-        }
+        socket.emit('send message',{
+            chatId:selectedChat
+        });
     }
 })
 document.getElementById('write-message-attach').addEventListener('click',()=>{
@@ -334,7 +373,6 @@ document.getElementById('conversation-send').addEventListener('click',async ()=>
             if(res3.ok){
                 const result2 = await res3.json();
                 selectedChatName = conversationInput.value.trim();
-                console.log(result)
                 selectedChat = result._id;
                 selectedDiscussion = result._id;
                 creater = result.creater;
@@ -456,7 +494,7 @@ document.getElementById('button-arrow').addEventListener('click',()=>{
     search.style.display='inline';
     searchBF.style.display='none';
     searchBP.style.display='none';
-    getChats();
+    //getChats();
 })
 
 document.getElementById('friends-search').addEventListener('click',()=>{
@@ -486,12 +524,9 @@ document.getElementById('write-message-send').addEventListener('click',async ()=
     const res = await fetch(`/chat/${selectedChat}/text-message`,{method:'POST',headers:{"Content-Type":"application/json"},body:JSON.stringify({message: writeMessage.value.trim()})});
     writeMessage.value='';
     if(res.ok){
-        const res2 = await fetch(`/chat/${selectedChat}/message`,{method:'GET'});
-        if(res2.ok){
-            const result = await res2.json();
-            displayChat(result);
-            getChats();
-        }
+        socket.emit('send message',{
+            chatId:selectedChat
+        });
     }
 });
 
@@ -715,12 +750,9 @@ async function openDialog(id,name){
     }
 }
 async function downloadFile(id,extension,name){
-    console.log(id)
-    console.log(extension)
     window.open(`/chat/download/${id+extension}`);
 }
 function displayChat(result){
-    console.log(result)
     turnOffVisibilityRight();
     let messageField = document.getElementById('message-field');
     messageField.innerHTML = '';
@@ -865,14 +897,13 @@ async function getChats(){
     const res = await fetch('/chats',{method:'GET'});
     if(res.ok){
         const result = await res.json();
-        console.log(result)
         const containerChats = document.getElementById('container-chats');
         containerChats.innerHTML='';
         if(result.chats.length === 0){
             containerChats.innerHTML = '<p class="friends-info">Здесь будет отображаться список ваших чатов</p>'
         }
         for(let x=0;x<result.chats.length;x++){
-            let name,date,message,photo,photoName,img;
+            let name,date,message,photo,photoName,img,online='';
             if(!(!result.chats[x].isPrivate&&result.chats[x].users.length===1)){
                 if(result.chats[x].isPrivate) {
                     name=result.chats[x].title;
@@ -915,6 +946,8 @@ async function getChats(){
                         date = `${date.getHours()}:${date.getMinutes()}`;
                     }
                 }
+                console.log(onlineList.indexOf(result.chats[x]._id)>-1);
+                if(onlineList.indexOf(result.chats[x]._id)>-1) online = `<div class="online"></div>`;
                 if(photo) img = `<img src="http://localhost:3000/img/${photo}?${Math.random()}" alt="" class="avatar">`;
                 else img = `<div class="avatar-text"><span>${name.charAt(0).toUpperCase()}</span></div>`;
                 containerChats.innerHTML += 
@@ -929,6 +962,7 @@ async function getChats(){
                                 <p class="message ellipsis">${message}</p> 
                             </div>
                         </div>
+                        ${online}
                     </div>`;
                      // <img src="../ui/img/ellipse.svg" alt="" class="viewed">
                 if(result.chats[x]._id===selectedChat){

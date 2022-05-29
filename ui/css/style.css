@@ -352,6 +352,21 @@ body, html{
     height: 10px;
     margin: auto 0px auto auto;
 }
+.online{
+    line-height: 1.4;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    border: 2.5px solid white;
+    border-radius: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto auto 13px 55px;
+    background: var(--blue-button);
+}
 .selected{
     background: var(--selected)
 }
@@ -362,7 +377,11 @@ body, html{
     background: var(--main-color);
 }
 .selected .avatar-text span{
-    color: var(--blue-button)
+    color: var(--blue-button);
+}
+.selected .online{
+    background: white;
+    border-color: var(--blue-button);
 }
 .header-menu{
     list-style-type: none;
@@ -372,6 +391,7 @@ body, html{
     width: 270px;
     border-radius: 20px;
     position: fixed;
+    z-index:2;
     box-shadow: 0 0 5px 0 var(--input-text);
     display: none;
 }
@@ -794,4 +814,7 @@ button::-moz-focus-inner {
     font-family: Montserrat-Light;
     margin: auto 0 -5px auto;
     font-size: 12px;
+}
+.chat{
+    position: relative;
 }

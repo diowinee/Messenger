@@ -15,6 +15,7 @@ document.getElementById("login").addEventListener("click",async ()=>{
         let res = await fetch("/login",{method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(log)});
         if(res.ok){
             let resObject = await res.json();
+            sessionStorage.setItem('token',resObject.token);
             window.location.href=window.location.href+resObject.redirectUrl;
         }
         else error(err,text);
@@ -43,6 +44,7 @@ document.getElementById("reg-create").addEventListener("click",async ()=>{
             let res = await fetch("/registration",{method:"POST", headers: {'Content-Type': 'application/json'}, body:JSON.stringify(reg)});
             if(res.ok){
                 let resObject = await res.json();
+                sessionStorage.setItem('token',resObject.token);
                 window.location.href=window.location.href+resObject.redirectUrl;
             }
             else error(err,text);
