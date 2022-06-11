@@ -32,7 +32,7 @@ body, html{
     font-family: Grafita;
     font-size: 80px;
     margin: 0 auto;
-    width: 200px;
+    width: 100%;
     text-align: center;
 }
 .input-text{
@@ -120,7 +120,7 @@ body, html{
 }
 .error{
     color: var(--error);
-    width: 300px;
+    width:100%;
     text-align: center;
     font-family: Montserrat-Light;
     font-size: 15px;
@@ -493,6 +493,12 @@ body, html{
     overflow-y: scroll;
     padding-bottom: 10px;
 }
+.container-chats-search{
+    width: 100%;
+    height: 688px;
+    overflow-y: scroll;
+    padding-bottom: 10px;
+}
 .friends,.search-friends{
     width: 100%;
 }
@@ -677,15 +683,15 @@ body, html{
     background: var(--button-menu);
 }
 
-.container-search-friends::-webkit-scrollbar,.container-friends::-webkit-scrollbar,.container-chats::-webkit-scrollbar {
+.container-search-friends::-webkit-scrollbar,.container-friends::-webkit-scrollbar,.container-chats::-webkit-scrollbar,.container-chats-search::-webkit-scrollbar {
     width: 10px;
 }
-.container-search-friends::-webkit-scrollbar-thumb,.container-friends::-webkit-scrollbar-thumb,.container-chats::-webkit-scrollbar-thumb {
+.container-search-friends::-webkit-scrollbar-thumb,.container-friends::-webkit-scrollbar-thumb,.container-chats::-webkit-scrollbar-thumb,.container-chats-search::-webkit-scrollbar-thumb {
     background: var(--input-text);
     border-radius: 8px;
     border: 3px solid var(--blue-button-text);
 }
-.container-search-friends::-webkit-scrollbar-thumb:hover,.container-friends::-webkit-scrollbar-thumb:hover,.container-chats::-webkit-scrollbar-thumb:hover{
+.container-search-friends::-webkit-scrollbar-thumb:hover,.container-friends::-webkit-scrollbar-thumb:hover,.container-chats::-webkit-scrollbar-thumb:hover,.container-chats-search::-webkit-scrollbar-thumb:hover{
     background: var(--button-menu);
 }
 .location-of-friends{
@@ -788,9 +794,6 @@ body, html{
     -o-text-overflow: ellipsis;
     max-width: 300px;
 }
-.text-transfer{
-    word-break:break-all;
-}
 .notes-width{
     white-space: nowrap;
     overflow: hidden;
@@ -817,4 +820,13 @@ button::-moz-focus-inner {
 }
 .chat{
     position: relative;
+}
+.name-n{
+    margin-bottom: -4px;
+}
+.message-n{
+    margin-bottom: -4px;
+}
+.text-transfer{
+    word-break:break-all;
 }

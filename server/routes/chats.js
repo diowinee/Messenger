@@ -30,3 +30,13 @@ module.exports.openChat = async(req,res)=>{
         res.sendStatus(400);
     }
 }
+module.exports.searchMessages = async (req,res) => {
+    try{
+        const chats = await chatsService.searchMessages(req.params.searchValue,req.userId);
+        if(!chats) res.sendStatus(400);
+        res.json({chats,userId:req.userId});
+    }
+    catch(e){
+        res.sendStatus(400);
+    }
+};

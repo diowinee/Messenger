@@ -25,6 +25,7 @@ const createConversation = document.getElementById('create-conversation');
 const addUsersSidebar = document.getElementById('add-users-sidebar');
 const participantsConversation = document.getElementById('participants-conversation');
 const conversationSettings = document.getElementById('conversation-settings');
+const chatsSearch = document.getElementById('chats-search');
 
 const socket = io('ws://localhost:8000',{transports:['websocket']});
 let onlineList = [];
@@ -55,7 +56,6 @@ socket.on('accept message',async (data)=>{
 });
 
 socket.on('online',(data)=>{
-    console.log(data.dialog);
     onlineList.push(data.dialog);
     getChats();
 });
@@ -68,6 +68,67 @@ socket.on('offline',(data)=>{
     getChats();
 });
 
+const mainSearch = document.getElementById('search');
+mainSearch.addEventListener('input',async ()=>{
+    const chats = document.getElementById('chats');
+    const chatsSearch = document.getElementById('chats-search');
+    if(mainSearch.value.trim()!==''){
+        chats.style.display = 'none';
+        chatsSearch.style.display = 'block';
+        const res = await fetch(`/chats/messages/${mainSearch.value.trim()}/search`,{method:'GET'});
+        if(res.ok){
+            const result = await res.json();
+            const chats = result.chats;
+            console.log(chats);
+            const containerChats = document.getElementById('container-chats-search');
+            containerChats.innerHTML='';
+            if(chats.length === 0){
+                containerChats.innerHTML = '<p class="friends-info">Сообщения по данному запросу не найдены/p>'
+            }  
+            for(let x=0;x<chats.length;x++){
+                let name,date,message,photo,img;
+                name = chats[x].title;
+                photo = chats[x].photo;
+                message = chats[x].message.modelId.text;
+                date = new Date(chats[x].message.createdDate); 
+                const datenow = new Date();
+                if(Math.floor((datenow - date) / (60 * 60 * 24 * 1000))>365){
+                    date = `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
+                }
+                else if(Math.floor((datenow - date) / (60 * 60 * 24 * 1000))>0){
+                    date = `${date.getDate()} ${months[date.getMonth()]}`;
+                }
+                else{
+                    if(date.getMinutes()<10){
+                        date = `${date.getHours()}:${'0' + date.getMinutes()}`;
+                    }
+                    else{
+                        date = `${date.getHours()}:${date.getMinutes()}`;
+                    }
+                }
+                if(photo) img = `<img src="http://localhost:3000/img/${photo}?${Math.random()}" alt="" class="avatar">`;
+                else img = `<div class="avatar-text"><span>${name.charAt(0).toUpperCase()}</span></div>`;
+                containerChats.innerHTML += 
+                    `<div class="chat" onclick="openChatSearch('${chats[x].id}','${name}')">
+                        ${img}
+                        <div class="text-block">
+                            <div class="ctb-div">
+                                <p class="name ellipsis">${name}</p>
+                                <p class="time">${date}</p>
+                            </div>  
+                            <div class="ctb-div">
+                                <p class="message ellipsis">${message}</p> 
+                            </div>
+                        </div>
+                    </div>`;
+            }
+        }  
+    }
+    else{
+        chats.style.display = 'block';
+        chatsSearch.style.display = 'none';
+    }
+});
 const filePhoto = document.getElementById('user-file-photo');
 filePhoto.addEventListener('change',()=>{
     const url = URL.createObjectURL(filePhoto.files[0]);
@@ -160,7 +221,7 @@ document.getElementById('cm-logout').addEventListener('click',async ()=>{
         chatOnly2.style.display='none';
         const chatOnly3 = document.getElementById('chat-only-3');
         chatOnly3.style.display='none';
-        
+        search.value = '';
         search.style.display='inline';
         searchBF.style.display='none';
         searchFF.style.display='none';
@@ -252,8 +313,8 @@ document.getElementById('cm-participants').addEventListener('click',async ()=>{
                     ${img}
                     <div class="text-block">
                         <div>
-                            <p class="name ellipsis-2">${result.participants.users[x].name}</p><br>
-                            <p class="message ellipsis-2">${result.participants.users[x].login}</p> 
+                            <p class="name ellipsis-2 name-n">${result.participants.users[x].name}</p><br>
+                            <p class="message ellipsis-2 message-n">${result.participants.users[x].login}</p> 
                         </div>  
                     </div>
                     ${button}
@@ -265,8 +326,8 @@ document.getElementById('cm-participants').addEventListener('click',async ()=>{
                     ${img}
                     <div class="text-block">
                         <div>
-                            <p class="name ellipsis-2">${result.participants.users[x].name}</p><br>
-                            <p class="message ellipsis-2">${result.participants.users[x].login}</p> 
+                            <p class="name ellipsis-2 name-n">${result.participants.users[x].name}</p><br>
+                            <p class="message ellipsis-2 message-n">${result.participants.users[x].login}</p> 
                         </div>  
                     </div>
                 </div>`;
@@ -376,10 +437,19 @@ document.getElementById('conversation-send').addEventListener('click',async ()=>
                 selectedChat = result._id;
                 selectedDiscussion = result._id;
                 creater = result.creater;
+                getChats();
                 displayChat(result2);
                 buttonArrow.click();
             }
         }
+    }
+    else{
+        conversationInput.style.outlineStyle="solid";
+        conversationInput.style.outlineColor="var(--error)";
+        setTimeout(()=>{
+            conversationInput.style.outlineStyle="";
+            conversationInput.style.outlineColor="var(--input-text)";
+        }, 500); 
     }
 })
 
@@ -416,8 +486,8 @@ async function searchByFriends(){
                 ${img}
                 <div class="text-block">
                     <div>
-                        <p class="name ellipsis-3">${requests[x].name}</p><br>
-                        <p class="message ellipsis-3">${requests[x].login}</p> 
+                        <p class="name ellipsis-3 name-n">${requests[x].name}</p><br>
+                        <p class="message ellipsis-3 message-n">${requests[x].login}</p> 
                     </div>  
                 </div>
                 <button class="but-plus" onclick="addNewFriend(this,event)">
@@ -441,8 +511,8 @@ async function searchByFriends(){
                 ${img}
                 <div class="text-block">
                     <div>
-                        <p class="name ellipsis-2">${friends[x].name}</p><br>
-                        <p class="message ellipsis-2">${friends[x].login}</p> 
+                        <p class="name ellipsis-2 name-n">${friends[x].name}</p><br>
+                        <p class="message ellipsis-2 message-n">${friends[x].login}</p> 
                     </div>  
                 </div>
                 <button class="but-cross" onclick="deleteFriend(this,event)">
@@ -557,6 +627,7 @@ function switchSidebar(e){
     buttonArrow.style.display='inline';
     const elem = document.getElementById(e);
     chats.style.display = 'none';
+    chatsSearch.style.display = 'none';
     elem.style.display = 'block';
 }
 
@@ -615,8 +686,8 @@ async function searchUsersDB(){
                     ${img}
                     <div class="text-block">
                         <div>
-                            <p class="name ellipsis-2">${users[x].name}</p><br>
-                            <p class="message ellipsis-2">${users[x].login}</p> 
+                            <p class="name ellipsis-2 name-n">${users[x].name}</p><br>
+                            <p class="message ellipsis-2 message-n">${users[x].login}</p> 
                         </div>  
                     </div>
                     <button class="but-cross" name="${users[x]._id}" onclick="addNewRequest(this,event)">
@@ -683,8 +754,8 @@ async function showFriends(){
                 ${img}
                 <div class="text-block">
                     <div>
-                        <p class="name ellipsis-3">${requests[x].name}</p><br>
-                        <p class="message ellipsis-3">${requests[x].login}</p> 
+                        <p class="name ellipsis-3 name-n">${requests[x].name}</p><br>
+                        <p class="message ellipsis-3 message-n">${requests[x].login}</p> 
                     </div>  
                 </div>
                 <button class="but-plus" onclick="addNewFriend(this,event)">
@@ -709,8 +780,8 @@ async function showFriends(){
                 ${img}
                 <div class="text-block">
                     <div>
-                        <p class="name ellipsis-2">${friends[x].name}</p><br>
-                        <p class="message ellipsis-2">${friends[x].login}</p> 
+                        <p class="name ellipsis-2 name-n">${friends[x].name}</p><br>
+                        <p class="message ellipsis-2 message-n">${friends[x].login}</p> 
                     </div>  
                 </div>
                 <button class="but-cross" onclick="deleteFriend(this,event)">
@@ -835,7 +906,7 @@ function displayChat(result){
                 messageField.innerHTML += `
                 <div class="my-message">
                     <div class="chat-message">
-                        <p class="chat-text text-transfer">${result.chat.messages[x].modelId.text}</p>
+                        <p class="chat-text text-transfer" lang="ru">${result.chat.messages[x].modelId.text}</p>
                         <p class="chat-text chat-text-time">${date}</p>
                     </div>
                 </div>`
@@ -847,10 +918,10 @@ function displayChat(result){
             else img = `<div class="chat-avatar-text"><span>${result.chat.messages[x].user.name.charAt(0).toUpperCase()}</span></div>`;
             if(result.chat.messages[x].models==='FileMessage'){
                 messageField.innerHTML += `
-                <div class="interlocutor chat-file-pad" onclick="downloadFile('${result.chat.messages[x].modelId._id}','${result.chat.messages[x].modelId.extension}','${result.chat.messages[x].modelId.name}')">
+                <div class="interlocutor chat-file-pad">
                     ${img}
                     <div class="chat-message">
-                        <div>
+                        <div onclick="downloadFile('${result.chat.messages[x].modelId._id}','${result.chat.messages[x].modelId.extension}','${result.chat.messages[x].modelId.name}')">
                             <p class="chat-name message-name-width">${result.chat.messages[x].user.name}</p>
                             <div class="chat-file">
                                 <div class="chat-icon-file"><i class="icon-file"></i></div>
@@ -871,7 +942,7 @@ function displayChat(result){
                     <div class="chat-message">            
                         <div>
                             <p class="chat-name message-name-width">${result.chat.messages[x].user.name}</p>
-                            <p class="chat-text text-transfer">${result.chat.messages[x].modelId.text}</p>
+                            <p class="chat-text text-transfer" lang="ru">${result.chat.messages[x].modelId.text}</p>
                         </div>
                         <p class="chat-text chat-text-time">${date}</p>
                     </div>
@@ -946,7 +1017,6 @@ async function getChats(){
                         date = `${date.getHours()}:${date.getMinutes()}`;
                     }
                 }
-                console.log(onlineList.indexOf(result.chats[x]._id)>-1);
                 if(onlineList.indexOf(result.chats[x]._id)>-1) online = `<div class="online"></div>`;
                 if(photo) img = `<img src="http://localhost:3000/img/${photo}?${Math.random()}" alt="" class="avatar">`;
                 else img = `<div class="avatar-text"><span>${name.charAt(0).toUpperCase()}</span></div>`;
@@ -996,6 +1066,27 @@ async function openChat(id,name){
         displayChat(result);
     }
 }
+async function openChatSearch(id,name){ 
+    mainSearch.value = '';
+    const chats = document.getElementById('chats');
+    chats.style.display = 'block';
+    const chatsSearch = document.getElementById('chats-search');
+    chatsSearch .style.display = 'none';
+    const containerChats = document.getElementById('container-chats-search');
+    containerChats.innerHTML='';
+    let res = await fetch(`/chats/${id}`,{method:'GET'});
+    if(res.ok){
+        const result = await res.json();
+        const selected = document.getElementsByName(selectedChat);
+        if(selected[0]) selected[0].classList.remove("selected");
+        const selectedChatBlock = document.getElementsByName(id);
+        selectedChatBlock[0].classList.add("selected");
+        selectedChat = result.chat._id;
+        if(result.chat.isPrivate) selectedDiscussion = result.chat._id;
+        selectedChatName = name;
+        displayChat(result);
+    }
+}
 
 async function searchParticipants(){
     let res = await fetch(`/search-participants?searchText=${searchBP.value.trim()}&chatId=${selectedDiscussion}`,{method:'GET'});
@@ -1019,8 +1110,8 @@ async function searchParticipants(){
                     ${img}
                     <div class="text-block">
                         <div>
-                            <p class="name ellipsis-2">${result.participants[x].name}</p><br>
-                            <p class="message ellipsis-2">${result.participants[x].login}</p> 
+                            <p class="name ellipsis-2 name-n">${result.participants[x].name}</p><br>
+                            <p class="message ellipsis-2 message-n">${result.participants[x].login}</p> 
                         </div>  
                     </div>
                     ${button}
@@ -1031,8 +1122,8 @@ async function searchParticipants(){
                     ${img}
                     <div class="text-block">
                         <div>
-                            <p class="name ellipsis-2">${result.participants[x].name}</p><br>
-                            <p class="message ellipsis-2">${result.participants[x].login}</p> 
+                            <p class="name ellipsis-2 name-n">${result.participants[x].name}</p><br>
+                            <p class="message ellipsis-2 message-n">${result.participants[x].login}</p> 
                         </div>  
                     </div>
                 </div>`;
@@ -1062,8 +1153,8 @@ function fillingFriendsForСonversation(friends){
                ${img}
                 <div class="text-block">
                     <div>
-                        <p class="name ellipsis-2">${friends[x].name}</p><br>
-                        <p class="message ellipsis-2">${friends[x].login}</p> 
+                        <p class="name ellipsis-2 name-n">${friends[x].name}</p><br>
+                        <p class="message ellipsis-2 message-n">${friends[x].login}</p> 
                     </div>  
                 </div>
                 <button class="but-plus" onclick="addParticipant(this,event)">

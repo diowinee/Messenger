@@ -56,6 +56,7 @@ app.get('/friends/requests',verify.verify,friends.outputRequests);
 
 app.get('/chats',verify.verify,chats.getChats);
 app.get('/chats/:chatId',verify.verify,chats.openChat);
+app.get('/chats/messages/:searchValue/search',verify.verify,chats.searchMessages);
 
 app.get('/search-friends',verify.verify,friends.searchFriends);
 app.get('/search-requests',verify.verify,friends.searchRequests);
